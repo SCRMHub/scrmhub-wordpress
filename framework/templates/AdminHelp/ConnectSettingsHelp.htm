@@ -1,0 +1,91 @@
+<h1>Connect Help</h1>
+
+<h2>Options</h2>
+
+<h3>Redirect on success</h3>
+<p>Choose which URL the page goes back to after a login request. This can be overridden on the button using the redirect function. Also note that if a parent_function is specified on the button, this will not get used.</p>
+
+<h3>Add to login</h3>
+<p>Add SCRM Hub buttons to the login form automatically (no programming required). This will show as buttons on the standard login form and will make the parent page refresh to the original re-direct location it would've gone to.</p>
+
+<h3>Require Connect to comment</h3>
+<p>Require users to use the SCRM Hub connect to make comments. This is assuming you are using the built in Wordpress commenting system and not a 3rd party tool.</p>
+
+<h3>Set User Photo</h3>
+<p>Set the user's profile photo  to be the one on their social profile when they have successfully connected.</p>
+
+<h3>Show the icon only</h3>
+<p>By default this is set to 'No', which means it will display a Button with the network's icon and name. Set it to 'Yes' and it will show a simple square icon with the network's logo in it.</p>
+
+<h2>Code Use</h2>
+<p>And now, how to use the code in your template. They all render in PHP using Wordpress Hooks but can also be called using RAW PHP.</p>
+
+<h3>Render all buttons</h3>
+<p>Automatically render the login buttons or logout buttons that you've turned on in the config</p>
+
+<pre><code class="php">&lt;?php
+do_action( 'scrmhub_connect' );
+do_action( 'scrmhub_connect', array(
+	'parent_function' => 'scrmhubLoginSuccessTest')
+);
+do_action( 'scrmhub_connect', array(
+	'redirect' => 'https://wherever.com/'
+));
+?&gt;</code></pre>
+
+
+<h3>Render a single Connect button</h3>
+<pre><code class="php">&lt;?php
+do_action( 'scrmhub_login_button', array(
+		'network' => 'facebook',
+		'label' => 'Connect with Facebook'
+));
+?&gt;</code></pre>
+
+
+<h3>Force ender all enabled connect networks</h3>
+<pre><code class="php">&lt;?php
+do_action( 'scrmhub_connect_login' );
+?&gt;</code></pre>
+
+<h3>Render the logout button</h3>
+<pre><code class="php">&lt;?php
+do_action( 'scrmhub_connect_logout' );
+?&gt;</code></pre>
+
+
+<h3>Get the connect URL for a network</h3>
+<p>If you wish to get the url into your PHP code, you can call it using our global helper function.</p>
+<pre><code class="php">&lt;?php
+global $scrmhub_connect_url;
+echo $scrmhub_connect_url('facebook');
+echo $scrmhub_connect_url(array(
+	'parent_function' => 'scrmhubLoginSuccessTest',
+	'network' => 'facebook'
+));
+?&gt;</code></pre>
+
+<h2>Arguments for connect functions</h2>
+<dl>
+	<dt>parent_function</dt>
+	<dd>Call a function in the parent window when the connect completes. Will call it with (success, message) where success is boolean and message is string. Note: On mobiles we won't call this as we use redirects. Instead either the redirect override or <strong>Redirect on success</strong> value will be used.</dd>
+
+	<dt>redirect</dt>
+	<dd>This will override the <strong>Redirect on success</strong> value after completion. Note: If parent_function is specified, that will get called instead. </dd>
+
+	<dt>class</dt>
+	<dd>Applied to the scrmhub hub action wrapper</dd>
+
+	<dt>button_class</dt>
+	<dd>Applied to the button &lt;a&gt; tag</dd>
+
+	<dt>network</dt>	
+	<dd>The Social Network to use (currently Facebook, LinkedIn and Twitter)</dd>
+
+	<dt>title</dt>
+	<dd>The title for the action box (set to false for not title)</dd>
+
+	<dt>button_label</dt>
+	<dd>Applied to the button (we will check the translation files)</dd>
+</dl>
+

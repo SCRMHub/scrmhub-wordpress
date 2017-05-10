@@ -1,0 +1,152 @@
+body.scrmhub_popup {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+
+  div {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    &.scrmhub_popup_header {    
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      height: 60px;
+      padding: 20px 20px 10px;
+      
+      h1 {
+        font-size: 1.2em;
+      }
+    }
+
+    &.scrmhub_popup_body {
+      position: absolute;
+      left: 0;
+      top: 40px;
+      bottom: 51px;
+      right: 0;
+      overflow: auto;
+      padding: 20px 20px 10px;
+    }
+
+    &.scrmhub_popup_actions {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      padding: 10px 20px;
+      border-top: 1px solid #cecece;
+      background-color: #eee;      
+      text-align: right;
+    
+      .info {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        font-size: 0.7em;
+      }
+    }
+  }  
+
+  #wpadminbar {
+    display: none;
+    position: absolute;
+    right: -1000px;
+    top: -1000px;
+  }
+}
+
+.scrmhub-connect-ajax-panel {
+  .hidden {
+    display: none;
+  }
+}
+
+.scrmhub-wrapper {
+  padding: 10px 0;
+  .scrmhub-action {
+    clear:both;
+
+    .scrmhub-action-title {
+      margin-bottom: 2px;
+      font-size: 100%;
+    }
+    .scrmhub-actions {
+      padding: 2px 0 10px;
+      clear: both;
+      overflow: visible;
+    }
+  }
+}
+
+a.scrmhub-button {
+  padding: 2px 5px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  float: left;
+  text-decoration: none!important;
+  border: 0 !important;
+
+  &:hover {
+    opacity: 0.8
+  }
+
+  i {
+    border: none;
+    font-family: "foundation-icons";
+    font-style: normal;
+    font-weight: 400;
+    speak: none;
+    font-size: 20px;
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1.3em;
+    margin-right: 0;
+    text-align: center;
+    font-variant: normal;
+    text-transform: none;
+    margin-top: 0;
+    color: #fff;
+  }
+
+  .text {
+    margin-right: .2em;
+    color: #fff;
+  }
+
+  &.scrmhub-icononly {
+    .text {
+      display: none;
+      position: absolute;
+      right: -1000px;
+      bottom: -1000px;
+    }
+  }
+
+  &.scrmhub-logout {
+    background: #ba2020;
+  }
+
+  &.scrmhub-facebook {
+    background: #2d5f9a;
+  }
+
+  &.scrmhub-twitter {
+    background: #00c3f3;
+  }
+
+  &.scrmhub-google {
+    background: #d73d32;
+  }
+
+  &.scrmhub-pinterest {
+    background: #cd252b;
+  }
+
+  &.scrmhub-linkedin {
+    background: #2ba3e1;
+  }
+}

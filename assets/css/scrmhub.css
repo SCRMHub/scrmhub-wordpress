@@ -1,0 +1,127 @@
+body.scrmhub_popup {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+body.scrmhub_popup div {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body.scrmhub_popup div.scrmhub_popup_header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 60px;
+  padding: 20px 20px 10px;
+}
+body.scrmhub_popup div.scrmhub_popup_header h1 {
+  font-size: 1.2em;
+}
+body.scrmhub_popup div.scrmhub_popup_body {
+  position: absolute;
+  left: 0;
+  top: 40px;
+  bottom: 51px;
+  right: 0;
+  overflow: auto;
+  padding: 20px 20px 10px;
+}
+body.scrmhub_popup div.scrmhub_popup_actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  padding: 10px 20px;
+  border-top: 1px solid #cecece;
+  background-color: #eee;
+  text-align: right;
+}
+body.scrmhub_popup div.scrmhub_popup_actions .info {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  font-size: 0.7em;
+}
+body.scrmhub_popup #wpadminbar {
+  display: none;
+  position: absolute;
+  right: -1000px;
+  top: -1000px;
+}
+.scrmhub-connect-ajax-panel .hidden {
+  display: none;
+}
+.scrmhub-wrapper {
+  padding: 10px 0;
+}
+.scrmhub-wrapper .scrmhub-action {
+  clear: both;
+}
+.scrmhub-wrapper .scrmhub-action .scrmhub-action-title {
+  margin-bottom: 2px;
+  font-size: 100%;
+}
+.scrmhub-wrapper .scrmhub-action .scrmhub-actions {
+  padding: 2px 0 10px;
+  clear: both;
+  overflow: visible;
+}
+a.scrmhub-button {
+  padding: 2px 5px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  float: left;
+  text-decoration: none!important;
+  border: 0 !important;
+}
+a.scrmhub-button:hover {
+  opacity: 0.8;
+}
+a.scrmhub-button i {
+  border: none;
+  font-family: "foundation-icons";
+  font-style: normal;
+  font-weight: 400;
+  speak: none;
+  font-size: 20px;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1.3em;
+  margin-right: 0;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  margin-top: 0;
+  color: #fff;
+}
+a.scrmhub-button .text {
+  margin-right: .2em;
+  color: #fff;
+}
+a.scrmhub-button.scrmhub-icononly .text {
+  display: none;
+  position: absolute;
+  right: -1000px;
+  bottom: -1000px;
+}
+a.scrmhub-button.scrmhub-logout {
+  background: #ba2020;
+}
+a.scrmhub-button.scrmhub-facebook {
+  background: #2d5f9a;
+}
+a.scrmhub-button.scrmhub-twitter {
+  background: #00c3f3;
+}
+a.scrmhub-button.scrmhub-google {
+  background: #d73d32;
+}
+a.scrmhub-button.scrmhub-pinterest {
+  background: #cd252b;
+}
+a.scrmhub-button.scrmhub-linkedin {
+  background: #2ba3e1;
+}

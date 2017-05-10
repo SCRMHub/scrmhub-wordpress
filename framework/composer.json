@@ -1,0 +1,39 @@
+{
+    "name": "scrmhub/wordpress-plugin",
+    "description": "SCRM Hub Wordpress Plugin",
+    "type": "wordpress-plugin",
+    "keywords": ["wordpress", "plugin", "theme", "updater", "install", "api", "social"],
+    "authors": [
+        {
+            "name": "Gregory Brine",
+            "email": "support@scrmhub.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "defuse/php-encryption"         : "1.2.1",
+        "scrmhub/api-php-sdk"           : "*",
+        "monolog/monolog"               : "*",
+        "piwik/device-detector"         : "*",
+        "sentry/sentry"                 : "*",
+        "doctrine/cache"                : "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "SCRMHub\\WordpressPlugin\\"            :   "src",
+            "SCRMHub\\WordpressPlugin\\Templates\\" :   "templates",      
+            "SCRMHub\\Framework\\"                  :   "src"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "https://@bitbucket.org/scrmhub/api-php-sdk.git"
+        }
+    ],
+    "config": {
+        "optimize-autoloader": true,
+        "prepend-autoloader" : false
+    },
+    "prefer-stable": true
+}

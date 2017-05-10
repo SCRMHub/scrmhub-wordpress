@@ -1,0 +1,72 @@
+<h1>Sharing Help</h1>
+
+<h2>Options</h2>
+<h3>Sharing Position</h3>
+<p>The plugin provides a couple of options for installing the sharing buttons on your site:</p>
+<ul>
+	<li>
+		<strong>Automatically</strong><br>
+		This is where we will automatically append the buttons into the post output.
+		<ul>
+			<li><u>Top</u> : Above the post content</li>
+			<li><u>Bottom</u> : Below the post content</li>
+			<li><u>Both</u> : Above and Below of the post content</li>
+		</ul>
+	</li>
+	<li>
+		<strong>Manual</strong><br>
+		You want to add our code manually to your templates. This provides a much greater level of control and some additional options such as rendering only one button, all buttons, adding settings, etc.
+	</li>	
+</ul>
+
+<h3>Sharing post types</h3>
+<p>Choose the types of Wordpress post type the buttons will appear on. By default we pre-tick 'Post' and 'Page', but any custom types will appear. However we cannot guarantee how our buttons will render on those pages as it is depen     dant on </p>
+
+<h3>Show icon only</h3>
+<p>By default this is set to 'No', which means it will display a Button with the network's icon and name. Set it to 'Yes' and it will show a simple square icon with the network's logo in it.</p>
+
+<h2>Networks</h2>
+<p>You can enable each network you wish to use here. The noteable difference is the Twitter setting that allows you to specify:</p>
+<ul>
+	<li>
+		<strong>Via</strong><br>
+		Any shares will have 'via @[value]' appended to the share text.
+	</li>
+	<li>
+		<strong>Use Quotes</strong><br>
+		This will wrap the text of the tweets in quote marks to make it clear it is the title of an article. This is optional, but something we like doing.
+	</li>
+</ul>
+
+<h2>Code Use</h2>
+<p>Now the good bit... How to use the code in your template. They all render in PHP using Wordpress Hooks but can also be called using RAW PHP.</p>
+
+<h3>Render all share buttons</h3>
+<p>This is the same code the automatic options call, and will render everything as you've defined it in these options.</p>
+<pre><code class="php">&lt;?php
+	do_action( 'scrmhub_share' );
+?&gt;</code></pre>
+<br>
+
+<h3>Render a single share button</h3>
+<p>If you wish to render a single button, and (optionally) give it a custom label, use the below example.</p>
+<pre><code class="php">&lt;?php
+	do_action('scrmhub_share_button', array(
+		'network' => 'twitter',
+		'label' => 'Share to Twitter'
+	));
+?&gt;</code></pre>
+<p><em>Note: That if you want to render a Twitter button as per this example, but have Twitter disabled on the option page, nothing will render as the system thinks the button is disabled.</em></p>
+<br>
+
+<h3>Output the URL for sharing to a network</h3>
+<p>If you want to just output the URL for sharing into your own code for a custom pop-up script for example, this will output it</p>
+<pre><code class="php">&lt;?php
+	do_action( 'scrmhub_share_url', 'twitter');
+?&gt;</code></pre>
+
+<p>Alternatively, if you wish to get the url into your PHP code, you can call it using our global helper function.</p>
+<pre><code class="php">&lt;?php
+	global $scrmhub_share_url;
+    $url = $scrmhub_share_url('facebook');
+?&gt;</code></pre>

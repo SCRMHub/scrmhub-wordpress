@@ -1,0 +1,5 @@
+*.codekit3
+*/cache/*
+*/logs/*
+framework/cache
+framework/logs
