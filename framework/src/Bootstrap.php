@@ -45,10 +45,9 @@ class Bootstrap {
 		}
 
 		//Setup the encryption class
-		$encrypt_salt 	= SECURE_AUTH_SALT;
 		$encrypt_key 	= SECURE_AUTH_KEY;
-		$app->encrypto = function() use($app, $encrypt_salt, $encrypt_key) {
-			return new \SCRMHub\Framework\Utility\EncryptDecrypt($app, $encrypt_salt, $encrypt_key);
+		$app->encrypto = function() use($app, $encrypt_key) {
+			return new \SCRMHub\Framework\Utility\EncryptDecrypt($app, $encrypt_key);
 		};
 
 		//Services
@@ -132,7 +131,7 @@ class Bootstrap {
 		    if((!defined('environment') || environment != 'dev') && !$app->device->isBot()) {
 		        $logger->pushHandler($app->logger_raven);
 		    }
-		    
+
 		    //3 days of logs only
 		    $stream = new \Monolog\Handler\RotatingFileHandler($settings['logger']['path'].'error.log', \Monolog\Logger::WARNING, 3);
 		    $formatter = new \Monolog\Formatter\LineFormatter(null, null, true);

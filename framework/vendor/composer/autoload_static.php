@@ -8,7 +8,7 @@ class ComposerStaticIniteeb2f219a4b0c1bbd577db79ce13a7ad
 {
     public static $files = array (
         '04c6c5c2f7095ccf6c481d3e53e1776f' => __DIR__ . '/..' . '/mustangostang/spyc/Spyc.php',
-        '8170285c807a9f24f165f37b15bc9a36' => __DIR__ . '/..' . '/defuse/php-encryption/Crypto.php',
+        '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -80,6 +80,20 @@ class ComposerStaticIniteeb2f219a4b0c1bbd577db79ce13a7ad
     );
 
     public static $classMap = array (
+        'Defuse\\Crypto\\Core' => __DIR__ . '/..' . '/defuse/php-encryption/src/Core.php',
+        'Defuse\\Crypto\\Crypto' => __DIR__ . '/..' . '/defuse/php-encryption/src/Crypto.php',
+        'Defuse\\Crypto\\DerivedKeys' => __DIR__ . '/..' . '/defuse/php-encryption/src/DerivedKeys.php',
+        'Defuse\\Crypto\\Encoding' => __DIR__ . '/..' . '/defuse/php-encryption/src/Encoding.php',
+        'Defuse\\Crypto\\Exception\\BadFormatException' => __DIR__ . '/..' . '/defuse/php-encryption/src/Exception/BadFormatException.php',
+        'Defuse\\Crypto\\Exception\\CryptoException' => __DIR__ . '/..' . '/defuse/php-encryption/src/Exception/CryptoException.php',
+        'Defuse\\Crypto\\Exception\\EnvironmentIsBrokenException' => __DIR__ . '/..' . '/defuse/php-encryption/src/Exception/EnvironmentIsBrokenException.php',
+        'Defuse\\Crypto\\Exception\\IOException' => __DIR__ . '/..' . '/defuse/php-encryption/src/Exception/IOException.php',
+        'Defuse\\Crypto\\Exception\\WrongKeyOrModifiedCiphertextException' => __DIR__ . '/..' . '/defuse/php-encryption/src/Exception/WrongKeyOrModifiedCiphertextException.php',
+        'Defuse\\Crypto\\File' => __DIR__ . '/..' . '/defuse/php-encryption/src/File.php',
+        'Defuse\\Crypto\\Key' => __DIR__ . '/..' . '/defuse/php-encryption/src/Key.php',
+        'Defuse\\Crypto\\KeyOrPassword' => __DIR__ . '/..' . '/defuse/php-encryption/src/KeyOrPassword.php',
+        'Defuse\\Crypto\\KeyProtectedByPassword' => __DIR__ . '/..' . '/defuse/php-encryption/src/KeyProtectedByPassword.php',
+        'Defuse\\Crypto\\RuntimeTests' => __DIR__ . '/..' . '/defuse/php-encryption/src/RuntimeTests.php',
         'DeviceDetector\\Cache\\Cache' => __DIR__ . '/..' . '/piwik/device-detector/Cache/Cache.php',
         'DeviceDetector\\Cache\\StaticCache' => __DIR__ . '/..' . '/piwik/device-detector/Cache/StaticCache.php',
         'DeviceDetector\\DeviceDetector' => __DIR__ . '/..' . '/piwik/device-detector/DeviceDetector.php',
@@ -302,6 +316,7 @@ class ComposerStaticIniteeb2f219a4b0c1bbd577db79ce13a7ad
         'SCRMHub\\WordpressPlugin\\Identity\\Session' => __DIR__ . '/../..' . '/src/Identity/Session.php',
         'SCRMHub\\WordpressPlugin\\Identity\\Token' => __DIR__ . '/../..' . '/src/Identity/Token.php',
         'SCRMHub\\WordpressPlugin\\Identity\\UserPhoto' => __DIR__ . '/../..' . '/src/Identity/UserPhoto.php',
+        'SCRMHub\\WordpressPlugin\\Identity\\Uuid' => __DIR__ . '/../..' . '/src/Identity/Uuid.php',
         'SCRMHub\\WordpressPlugin\\Identity\\WP_User' => __DIR__ . '/../..' . '/src/Identity/WP_User.php',
         'SCRMHub\\WordpressPlugin\\Interfaces\\Connect' => __DIR__ . '/../..' . '/src/Interfaces/Connect.php',
         'SCRMHub\\WordpressPlugin\\Interfaces\\FilterContent' => __DIR__ . '/../..' . '/src/Interfaces/FilterContent.php',

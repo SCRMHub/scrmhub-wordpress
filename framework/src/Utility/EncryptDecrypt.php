@@ -6,12 +6,13 @@
  */
 namespace SCRMHub\Framework\Utility;
 
-use Crypto;
-use Ex\CryptoTestFailedException;
-use Ex\CannotPerformOperationException;
-use InvalidCiphertextException;
-use Exception;
+use Defuse\Crypto\Key;
+use Defuse\Crypto\Crypto;
+use Defuse\Crypto\Encoding;
+use Defuse\Crypto\KeyProtectedByPassword;
+use Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException;
 
+use Exception;
 use SCRMHub\Framework\Utility\App;
 
 
@@ -32,60 +33,32 @@ class EncryptDecrypt {
 	 * @var $key The encrypton key
 	 */
 	private
+		$rawKey,
 		$key;
-
-
-	/**
-	 * @var $salt The salt added to strings for extra security
-	 */
-	private
-		$salt;
 
 	/**
 	 * 
-	 * @param string $salt 	The salt to append to the string for extra protection
 	 * @param string $key 	The encryption key. It might be null as this could be generating the key
 	 */
-	function __construct(App $app, $salt = null, $key = null) {
+	function __construct(App $app, $key = null) {
 		$this->app 	= $app;
-		$this->salt = $salt;
-		$this->key 	= substr($key, 0, 16);
+		$this->rawKey = $key;
 	}
 
 
 	/**
 	 * Get the encryption key
-	 * Needed for auto updates
 	 */
-	function getKey() {
+	private function getKey() {
+		if(empty($this->key)) {
+	        $this->key = Key::loadFromAsciiSafeString(Encoding::saveBytesToChecksummedAsciiSafeString(
+	            Key::KEY_CURRENT_VERSION,
+	            substr($this->rawKey, 0, 32)
+	        ));
+		}
+
 		return $this->key;
 	}
-
-	/** 
-	 * Gerneate a cipher key
-	 * @return string A strong cipher key
-	 */
-	function generateKey() {
-		try {
-		    $encrypt_key = Crypto::createNewRandomKey();
-		    // WARNING: Do NOT encode $key with bin2hex() or base64_encode(),
-		    // they may leak the key to the attacker through side channels.
-		} catch (CryptoTestFailedException $CryptoEx) {
-			$this->app->logger->error('Cannot safely create a key');
-		    die('Cannot safely create a key');
-		} catch (CannotPerformOperationException $CryptoEx) {
-			$this->app->logger->error('Cannot safely create a key operation');
-		    die('Cannot safely create a operation');
-		}
-
-		if(empty($encrypt_key)) {
-			$this->app->logger->error("The encryption key is empty");
-			throw new Exception("The encryption key is empty");
-			die();
-		}
-
-		return $encrypt_key;
-	} 
 
 	/**
 	 * encrypt a cipher string
@@ -93,20 +66,10 @@ class EncryptDecrypt {
 	 * @return $ciphertext 		The encoded string
 	 */
 	function encrypt($message) {
-		try {
-			$message .= $this->salt;
-			$ciphertext = Crypto::Encrypt($message, $this->key);
-		} catch (CryptoTestFailedException $ex) {
-			$this->app->logger->error('Crypto test failed'."\n".print_r($ex, true));
-			die('Cannot safely perform encryption');
-		} catch (CannotPerformOperationException $ex) {
-			$this->app->logger->error('Crypto cannot perform encryption operation'."\n".print_r($ex, true));
-			die('Cannot safely perform decryption');
-		} catch(Exception $ex) {			
-			$this->app->logger->error('Crypto threw an unknown error'."\n".print_r($ex, true));
-			die('An error has occured');
-		}
+		//Encrypt it
+		$ciphertext = Crypto::encrypt($message, $this->getKey());
 
+		//
 		return $ciphertext;
 	}
 
@@ -117,31 +80,13 @@ class EncryptDecrypt {
 	 */
 	function decrypt($ciphertext) {
 		try {
-			$decrypted = Crypto::Decrypt($ciphertext, $this->key);
-		} catch (InvalidCiphertextException $ex) {
-			// VERY IMPORTANT
-			// Either:
-			//   1. The ciphertext was modified by the attacker,
-			//   2. The key is wrong, or
-			//   3. $ciphertext is not a valid ciphertext or was corrupted.
-			// Assume the worst.
-			$this->app->logger->error('Crypto decrypt: Invalid cipher error. Has it been tampered with?'."\n".print_r($ex, true));
-			return false;
-		} catch (CryptoTestFailedException $ex) {
-			$this->app->logger->error('Crypto decrypt: Test failed'."\n".print_r($ex, true));
-			return false;
-		} catch (CannotPerformOperationException $ex) {
-			$this->app->logger->error('Crypto decrypt: Operation failed'."\n".print_r($ex, true));
-			return false;
-		} catch(Exception $ex) {
-			$this->app->logger->error('Crypto decrypt: General error'."\n".print_r($ex, true));
+			//decrypt it
+			$decrypted = Crypto::Decrypt($ciphertext, $this->getKey());
+
+			return $decrypted;
+		} catch (WrongKeyOrModifiedCiphertextException $ex) {
+		    $this->app->logger->error('Crypto decrypt: Invalid cipher error. Has it been tampered with?'."\n".print_r($ex, true));
 			return false;
 		}
-
-		//strip the salt
-		$decrypted = str_replace($this->salt, '', $decrypted);
-
-		//Return the string
-		return $decrypted;
 	}
 }

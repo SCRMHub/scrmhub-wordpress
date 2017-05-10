@@ -1,3 +1,6 @@
+V2.4.1
+- Migrated to latest Crypto Library
+
 V2.4
 - Migrate to GitHub and rename to scrmhub-wordpress
 - Mainly code tidying ready for the GitHub move
@@ -99,6 +102,3 @@ Changes 26th November 2015
 - Added a confirmation message to settings that will update the whole network
 - Re-worked error message handling
 - Added parent_function option to connecting. Add this as an argument to the connect render, and when connect finishes, this will be called in the parent window
-
-
-

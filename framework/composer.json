@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=5.5.0",
-        "defuse/php-encryption"         : "1.2.1",
+        "defuse/php-encryption"         : "*",
         "scrmhub/api-php-sdk"           : "*",
         "monolog/monolog"               : "*",
         "piwik/device-detector"         : "*",
