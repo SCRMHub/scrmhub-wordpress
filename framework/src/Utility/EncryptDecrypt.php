@@ -11,6 +11,7 @@ use Defuse\Crypto\Crypto;
 use Defuse\Crypto\Encoding;
 use Defuse\Crypto\KeyProtectedByPassword;
 use Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException;
+use Defuse\Crypto\Exception as Ex;
 
 use Exception;
 use SCRMHub\Framework\Utility\App;
@@ -43,6 +44,36 @@ class EncryptDecrypt {
 	function __construct(App $app, $key = null) {
 		$this->app 	= $app;
 		$this->rawKey = $key;
+	}
+
+	/**
+	 * Check that the Crypto Library can run
+	 */
+	public function installTest() {
+		$key  = Key::createNewRandomKey();
+        $data = "EnCrYpT EvErYThInG\x00\x00";
+
+        try {
+        	// Make sure encrypting then decrypting doesn't change the message.
+        	$ciphertext = Crypto::encrypt($data, $key, true);
+
+        	//Did it come back
+        	$decrypted = Crypto::decrypt($ciphertext, $key, true);
+        } catch (Ex\WrongKeyOrModifiedCiphertextException $ex) {
+            // It's important to catch this and change it into a
+            // Ex\EnvironmentIsBrokenException, otherwise a test failure could trick
+            // the user into thinking it's just an invalid ciphertext!
+            return $ex;
+        } catch(Exception $e) {
+        	return $ex;
+        }
+
+        //Keys didn't match
+        if ($decrypted !== $data) {
+            return 'Keys could not be decoded properly';
+        }
+        
+        return false;
 	}
 
 

@@ -3,10 +3,10 @@ namespace SCRMHub\WordpressPlugin\Versioning;
 
 use SCRMHub\Framework\Utility\EncryptDecrypt;
 
-use Crypto;
-use Ex\CryptoTestFailedException;
-use Ex\CannotPerformOperationException;
-use InvalidCiphertextException;
+
+use Defuse\Crypto\Crypto;
+use Defuse\Crypto\Exception as Ex;
+use Defuse\Crypto\EnvironmentIsBrokenException;
 use Exception;
 
 class Installer {
@@ -19,7 +19,13 @@ class Installer {
 	}
 
 	public function doInstallUpdate($everything = false) {
-		$pluginData = $this->getPluginData();
+		$pluginData = get_plugin_data(SCRMHUB__PLUGIN_BASE_DIR.'scrmhub.php');
+		$pluginVersionOld = get_option('SCRMHUB__VERSION');
+
+		$versionComp = version_compare( $pluginData['Version'], $pluginVersionOld);
+		var_dump('compare', $versionComp);
+		var_dump($pluginData, $pluginVersionOld);
+		die;
 
 		if(!get_option(SCRMHUB__VERSION_KEY) || $everything) {
 			$message = $this->install();
@@ -97,21 +103,14 @@ class Installer {
 		}
 
 		//Check for security keys
-		if(!defined('SECURE_AUTH_SALT') || !defined('SECURE_AUTH_KEY') || empty(SECURE_AUTH_SALT) || empty(SECURE_AUTH_KEY)) {
-			$this->bail_on_activation('Please make sure that the SECURE_AUTH_SALT and SECURE_AUTH_KEY are defined in your configuration and not empty. You can find more information here: https://codex.wordpress.org/Editing_wp-config.php#Security_Keys');
+		if(!defined('SECURE_AUTH_KEY') || empty(SECURE_AUTH_KEY)) {
+			$this->bail_on_activation('Please make sure that the SECURE_AUTH_KEY is defined in your configuration and not empty. You can find more information here: https://codex.wordpress.org/Editing_wp-config.php#Security_Keys');
 		}
 
 		//Then check crypo can run
-		try {
-		    Crypto::RuntimeTest();
-		    return false;
-		} catch (CryptoTestFailedException $ex) {
-			$this->bail_on_activation('There was an issue with the Crypto Library.<br>'.print_r($ex, true));
-		} catch (CannotPerformOperationException $ex) {
-			$this->bail_on_activation('There was an issue with the Crypto Library.<br>'.print_r($ex, true));
+		if($cryptoError = $this->app->encrypto->installTest()) {
+			$this->bail_on_activation('There was an issue with the Crypto Library installation.<br>'.print_r($cryptoError, true));
 		}
-
-
 	}
 
 	/**
